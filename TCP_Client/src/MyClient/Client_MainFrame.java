@@ -15,8 +15,16 @@ import java.awt.Button;
 import javax.swing.JRadioButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -27,12 +35,12 @@ public class Client_MainFrame extends JFrame {
 	private static String dst_ip;                             //定义目的IP
 	private static int dst_port;                             //定义目的Port
 	private File sendfile;
-	private String sendfile_path;                //要发送的文件路径
+	private String sendfile_path;                          //要发送的文件路径
 	private static int sendbuffersize;                  //定义发送缓冲区的大小
-	private static int send_SoLinger;                   //定义滞留时间(s)
-	private static int send_Timeout;                   //定义超时时间(ms)
-	private static boolean NagleState;              //Nagle算法状态(启用/禁止)
-	private String send_infoback;             //反馈的信息
+	private static int send_SoLinger;                  //定义滞留时间(s)
+	private static int send_Timeout;                  //定义超时时间(s)
+	private static boolean NagleState;             //Nagle算法状态(启用/禁止)
+	private String send_infoback;                      //反馈的信息
 	
 	private static Socket client;                         //定义socket
 
@@ -53,7 +61,6 @@ public class Client_MainFrame extends JFrame {
 				try {
 					Client_MainFrame frame = new Client_MainFrame();
 					frame.setVisible(true);
-					getparams(client);                                    //为client赋值
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -136,7 +143,7 @@ public class Client_MainFrame extends JFrame {
 		lblms_1.setBounds(24, 192, 90, 23);
 		contentPane.add(lblms_1);
 		
-		JLabel lblms = new JLabel("\u8D85\u65F6\u65F6\u95F4(ms):");
+		JLabel lblms = new JLabel("\u8D85\u65F6\u65F6\u95F4(s):");
 		lblms.setFont(new Font("微软雅黑", Font.PLAIN, 13));
 		lblms.setBounds(24, 225, 90, 23);
 		contentPane.add(lblms);
@@ -181,6 +188,69 @@ public class Client_MainFrame extends JFrame {
 		contentPane.add(send_infoback_textfield);
 		
 		Button sendfile_btn = new Button("\u53D1\u9001\u6587\u4EF6");
+		sendfile_btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				getparams(client); // 为client赋值
+				FileInputStream filereader = null;                          //读取要发送的文件流
+				DataOutputStream out = null;                              //定义向server发送的数据流
+				DataInputStream in = null;                                             //定义从serve端接收的数据流
+			    try {
+					filereader =new FileInputStream(sendfile);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}       
+			    try {
+					out = new DataOutputStream((client.getOutputStream()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}   
+			    
+			    try {
+					in = new DataInputStream((client.getInputStream()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    int ch;                                                                                   //作为标记
+			    try {
+					while ((ch=filereader.read())!=-1) {                                    //判断文件是否读完(每次读取1byte)
+						try {
+							out.write(ch);
+							out.flush();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+			    
+			    try {
+					send_infoback = in.readUTF();
+					send_infoback_textfield.setText(send_infoback);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    	   
+			    try {                                             //关闭I/O流
+					filereader.close();
+			    	in.close();
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+			    
+			}
+
+		});
 		sendfile_btn.setFont(new Font("微软雅黑", Font.PLAIN, 13));
 		sendfile_btn.setBounds(299, 292, 76, 23);
 		contentPane.add(sendfile_btn);
@@ -212,7 +282,7 @@ public class Client_MainFrame extends JFrame {
 		try {
 			myclient.setSendBufferSize(sendbuffersize);
 			myclient.setSoLinger(true, send_SoLinger);
-			myclient.setSoTimeout(send_Timeout);
+			myclient.setSoTimeout(send_Timeout*1000);
 			myclient.setTcpNoDelay(NagleState);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
