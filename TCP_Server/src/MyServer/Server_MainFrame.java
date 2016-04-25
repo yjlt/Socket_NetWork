@@ -15,6 +15,16 @@ import java.awt.Button;
 public class Server_MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	
+	private TextField listenport_textField;
+	private TextField savepath_textField;
+	private TextField ReceiveBufferSize_textField;
+	private TextField SoLinger_textField;
+	private JRadioButton Nagle_on_radion;
+	private JRadioButton Nagle_off_radion;
+	private TextField send_infoback_textfield;
+	private Button recefile_btn;
+	private Button clearsetting_btn;
 
 	/**
 	 * Launch the application.
@@ -50,76 +60,76 @@ public class Server_MainFrame extends JFrame {
 		label.setBounds(27, 23, 74, 23);
 		contentPane.add(label);
 		
-		TextField textField = new TextField();
-		textField.setEnabled(false);
-		textField.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		textField.setBounds(122, 23, 162, 23);
-		contentPane.add(textField);
+		listenport_textField = new TextField();
+		listenport_textField.setEnabled(false);
+		listenport_textField.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		listenport_textField.setBounds(122, 23, 162, 23);
+		contentPane.add(listenport_textField);
 		
 		JLabel label_1 = new JLabel("\u63A5\u6536\u6587\u4EF6\u4F4D\u7F6E:");
 		label_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
 		label_1.setBounds(27, 62, 81, 23);
 		contentPane.add(label_1);
 		
-		TextField textField_1 = new TextField();
-		textField_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		textField_1.setBounds(122, 62, 162, 23);
-		contentPane.add(textField_1);
+		savepath_textField = new TextField();
+		savepath_textField.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		savepath_textField.setBounds(122, 62, 162, 23);
+		contentPane.add(savepath_textField);
 		
 		JLabel label_2 = new JLabel("\u63A5\u6536\u7F13\u5B58:");
 		label_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
 		label_2.setBounds(27, 95, 81, 23);
 		contentPane.add(label_2);
 		
-		TextField textField_2 = new TextField();
-		textField_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		textField_2.setBounds(122, 95, 162, 23);
-		contentPane.add(textField_2);
+		ReceiveBufferSize_textField = new TextField();
+		ReceiveBufferSize_textField.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		ReceiveBufferSize_textField.setBounds(122, 95, 162, 23);
+		contentPane.add(ReceiveBufferSize_textField);
 		
 		JLabel lbls = new JLabel("\u6EDE\u7559\u65F6\u95F4(s):");
 		lbls.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
 		lbls.setBounds(27, 132, 81, 23);
 		contentPane.add(lbls);
 		
-		TextField textField_3 = new TextField();
-		textField_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		textField_3.setBounds(122, 132, 162, 23);
-		contentPane.add(textField_3);
+		SoLinger_textField = new TextField();
+		SoLinger_textField.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		SoLinger_textField.setBounds(122, 132, 162, 23);
+		contentPane.add(SoLinger_textField);
 		
 		JLabel lblNagle = new JLabel("Nagle\u7B97\u6CD5:");
 		lblNagle.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
 		lblNagle.setBounds(27, 176, 81, 23);
 		contentPane.add(lblNagle);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("\u542F\u7528");
-		rdbtnNewRadioButton.setBounds(122, 176, 74, 23);
-		contentPane.add(rdbtnNewRadioButton);
+		Nagle_on_radion = new JRadioButton("\u542F\u7528");
+		Nagle_on_radion.setBounds(122, 176, 74, 23);
+		contentPane.add(Nagle_on_radion);
 		
-		JRadioButton radioButton = new JRadioButton("\u7981\u7528");
-		radioButton.setSelected(true);
-		radioButton.setBounds(210, 176, 74, 23);
-		contentPane.add(radioButton);
+		Nagle_off_radion = new JRadioButton("\u7981\u7528");
+		Nagle_off_radion.setSelected(true);
+		Nagle_off_radion.setBounds(210, 176, 74, 23);
+		contentPane.add(Nagle_off_radion);
 		
 		JLabel label_3 = new JLabel("\u4FE1\u606F\u53CD\u9988:");
 		label_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
 		label_3.setBounds(27, 221, 81, 23);
 		contentPane.add(label_3);
 		
-		TextField textField_4 = new TextField();
-		textField_4.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		textField_4.setBounds(122, 221, 162, 23);
-		contentPane.add(textField_4);
+		send_infoback_textfield = new TextField();
+		send_infoback_textfield.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		send_infoback_textfield.setBounds(122, 221, 162, 23);
+		contentPane.add(send_infoback_textfield);
 		
-		Button button = new Button("\u63A5\u6536\u6587\u4EF6");
-		button.setActionCommand("\u63A5\u6536\u6587\u4EF6");
-		button.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		button.setBounds(27, 274, 76, 23);
-		contentPane.add(button);
+		recefile_btn = new Button("\u63A5\u6536\u6587\u4EF6");
+		recefile_btn.setActionCommand("\u63A5\u6536\u6587\u4EF6");
+		recefile_btn.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		recefile_btn.setBounds(27, 274, 76, 23);
+		contentPane.add(recefile_btn);
 		
-		Button button_1 = new Button("\u6E05\u7A7A\u914D\u7F6E");
-		button_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
-		button_1.setActionCommand("\u63A5\u6536\u6587\u4EF6");
-		button_1.setBounds(208, 274, 76, 23);
-		contentPane.add(button_1);
+		clearsetting_btn = new Button("\u6E05\u7A7A\u914D\u7F6E");
+		clearsetting_btn.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 13));
+		clearsetting_btn.setActionCommand("\u63A5\u6536\u6587\u4EF6");
+		clearsetting_btn.setBounds(208, 274, 76, 23);
+		contentPane.add(clearsetting_btn);
 	}
 }
