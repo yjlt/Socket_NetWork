@@ -232,17 +232,28 @@ public class Client_MainFrame extends JFrame {
 							send_infoback_textfield.setText("发送文件失败");
 						}
 					}
+<<<<<<< HEAD
 					client.shutdownOutput();             //关闭发送端输出流
+=======
+>>>>>>> origin/master
 				} catch (IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 				System.out.println("文件传输完毕");
+<<<<<<< HEAD
 				
 				
 				try {
 					byte[] backmsg =new byte[64];
 					int conut = in.read(backmsg,0,backmsg.length);
+=======
+
+				/*
+				try {
+					byte[] backmsg =new byte[64];
+					int conut = in.read(backmsg);
+>>>>>>> origin/master
 					send_infoback = new String(backmsg);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -250,7 +261,11 @@ public class Client_MainFrame extends JFrame {
 					System.out.println("无法获取到服务器端的反馈信息");
 				}		
 				send_infoback_textfield.setText(send_infoback);
+<<<<<<< HEAD
 				
+=======
+				*/
+>>>>>>> origin/master
 				
 				try {                                                  // 关闭I/O流
 					filereader.close();
