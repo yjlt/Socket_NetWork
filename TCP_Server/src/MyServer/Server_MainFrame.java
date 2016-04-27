@@ -159,16 +159,11 @@ public class Server_MainFrame extends JFrame {
 		recefile_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				send_infoback_textfield.setText("正在等待客户端连接………");
+				
 				try {
-					client = server.accept();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					System.out.println("监听端口失败");
-				}
-				getparams(); // 获取设置的socket的各个参数
-				try {
-					invoke(client);
+					invoke();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -238,9 +233,18 @@ public class Server_MainFrame extends JFrame {
 
 	}
 
-	private static void invoke(final Socket client) throws IOException {
+	private static void invoke() throws IOException {
 		new Thread(new Runnable() {
-			public void run() {
+			public void run() {	
+				try {
+					client = server.accept();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					System.out.println("监听端口失败");
+				}
+				getparams(); // 获取设置的socket的各个参数
+				
 				DataInputStream in = null; // 定义从client端接收的数据流
 				DataOutputStream out = null; // 定义向client端发送的数据流
 				FileOutputStream filewriter = null; // 将接收的数据流写入文件的流
