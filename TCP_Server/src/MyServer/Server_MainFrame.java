@@ -258,25 +258,11 @@ public class Server_MainFrame extends JFrame {
 
 				int length = 0;
 				try {
-<<<<<<< HEAD
 					while ((length = in.read(inputByte, 0, inputByte.length))>0) { // 判断socket流是否读完(每次读取1024byte)						
 						filewriter.write(inputByte, 0, length);
 						filewriter.flush();
 					}
 					client.shutdownInput();                         //关闭接收端输入流
-=======
-					while (true) { // 判断socket流是否读完(每次读取1024byte)
-						if (in != null) {
-							length = in.read(inputByte, 0, inputByte.length);
-						}
-						if (length == -1) {
-							break;
-						}
-						filewriter.write(inputByte, 0, length);
-						filewriter.flush();
-					}
-					
->>>>>>> origin/master
 					send_infoback = "接收的文件保存成功！";
 					backmsg ="服务器端已成功接收文件！";
 				} catch (IOException e) {
@@ -285,11 +271,7 @@ public class Server_MainFrame extends JFrame {
 					send_infoback = "接收的文件保存失败！";
 					backmsg = "服务器端接收文件失败！";
 				}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> origin/master
 				send_infoback_textfield.setText(send_infoback);
 				
 	
